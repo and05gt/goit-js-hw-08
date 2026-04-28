@@ -74,7 +74,7 @@ const image = images
         <img
           class="gallery-image"
           src=${preview}
-          data-source="large-image.jpg"
+          data-source=${original}
           alt=${description}
         />
       </a>
@@ -84,3 +84,17 @@ const image = images
   .join('');
 
 gallery.insertAdjacentHTML('beforeend', image);
+
+gallery.addEventListener('click', handleImageClick);
+
+function handleImageClick(event) {
+  event.preventDefault();
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  }
+
+  const modalContent = `<img src=${event.target.dataset.source} alt=${event.target.alt}/>`;
+  const instance = basicLightbox.create(modalContent);
+
+  instance.show();
+}
